@@ -9,35 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-/* تصميم شاشة المقدمة الفخمة */
-    #intro-screen {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: #000; z-index: 9999;
-      display: flex; justify-content: center; align-items: center;
-      text-align: center; padding: 20px;
-      transition: opacity 1s ease-in-out; /* اختفاء ناعم */
-    }
-
-    .intro-text {
-      color: var(--gold);
-      font-size: 18px;
-      line-height: 1.8;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-      border-left: 2px solid var(--gold); /* مؤشر الكتابة */
-      padding-left: 10px;
-      white-space: pre-wrap; /* للحفاظ على الأسطر */
-    }
-
-    /* كلاس للإخفاء */
-    .fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
   <style>
     :root {
       --gold: #ffd700;
-      --glass-bg: rgba(0, 0, 0, 0.60); /* تخفيف الشفافية للسرعة */
+      --glass-bg: rgba(0, 0, 0, 0.60);
       --glass-border: rgba(255, 215, 0, 0.3);
     }
 
@@ -54,50 +29,106 @@
       perspective: 1000px;
     }
 
-    /* فيديو الخلفية - يظهر فوراً */
+    /* === ستايل الاسم في الأعلى يميناً === */
+    .top-header {
+      position: fixed;
+      top: 25px;
+      right: 25px; /* يمين الشاشة */
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 2px;
+      z-index: 2000; /* طبقة عالية جداً */
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+      pointer-events: none; /* للسماح بالنقر تحته */
+    }
+
+    /* === ستايل شاشة التحميل (العداد) === */
+    #loader-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85); /* خلفية داكنة */
+      z-index: 9999;
+      display: flex; justify-content: center; align-items: center;
+      transition: opacity 0.8s ease; /* اختفاء ناعم */
+      backdrop-filter: blur(8px); /* تأثير ضبابي قوي */
+    }
+
+    .loader-circle {
+      position: relative;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+    }
+
+    .loader-ring {
+      position: absolute;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: var(--gold);
+      border-right-color: var(--gold);
+      animation: spin 1s linear infinite;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    .loader-count {
+      color: #fff;
+      font-size: 24px;
+      font-weight: 900;
+      text-shadow: 0 0 10px var(--gold);
+      font-family: sans-serif; /* للأرقام الإنجليزية */
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* === ستايلات الموقع الأصلية === */
     #video-bg {
       position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover; z-index: -10;
-      background: #000; /* لون احتياطي حتى يشتغل الفيديو */
+      background: #000;
     }
 
-    /* تعتيم خفيف جداً للقراءة */
     .overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.3); z-index: -9;
     }
 
-    /* حاوية البطاقة - إصلاح السرعة */
     .card-container {
       width: 90%; max-width: 400px; height: 600px;
       position: relative; 
       transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* تسريع الحركة */
-      will-change: transform; /* أمر للجوال باستخدام المعالج القوي */
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      will-change: transform;
     }
 
     .card-container.flipped {
       transform: rotateY(180deg);
     }
 
-    /* وجه البطاقة */
     .face {
       position: absolute; width: 100%; height: 100%;
-      backface-visibility: hidden; /* ضروري لإخفاء الظهر */
-      -webkit-backface-visibility: hidden; /* للآيفون */
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       border-radius: 30px;
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
     }
 
-    /* الوجه الخلفي */
     .face.back {
       transform: rotateY(180deg);
     }
 
-    /* اللوجو */
     .logo {
       width: 120px; height: 120px; border-radius: 50%;
       background: url('logo.png') center/cover;
@@ -109,7 +140,6 @@
     h1 { font-size: 24px; color: #fff; margin-bottom: 5px; text-shadow: 0 2px 5px #000; }
     h2 { font-size: 14px; color: var(--gold); margin-bottom: 30px; letter-spacing: 1px; }
 
-    /* الأزرار - خفيفة وسريعة */
     .btn {
       width: 100%; padding: 15px; margin: 8px 0; border-radius: 50px;
       background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 215, 0, 0.3);
@@ -121,7 +151,6 @@
     .btn:active { transform: scale(0.95); background: var(--gold); color: #000; }
     .btn i { font-size: 18px; }
 
-    /* زر الموسيقى العائم */
     .music-btn {
       position: fixed; bottom: 20px; left: 20px;
       width: 45px; height: 45px; border-radius: 50%;
@@ -135,12 +164,18 @@
 </head>
 <body>
 
-<!-- شاشة التحميل -->
-  <div id="intro-screen">
-    <div class="intro-text" id="typing-area"></div>
+  <!-- الهيدر العلوي الثابت -->
+  <div class="top-header">S T O R E • K I N G</div>
+
+  <!-- شاشة التحميل (عداد دائري) -->
+  <div id="loader-screen">
+    <div class="loader-circle">
+      <div class="loader-count" id="count-text">0%</div>
+      <div class="loader-ring"></div>
+    </div>
   </div>
 
-  <!-- الفيديو يظهر فوراً (بدون شاشة سوداء) -->
+  <!-- الفيديو الخلفية -->
   <video id="video-bg" autoplay loop muted playsinline>
     <source src="bg.mp4" type="video/mp4">
   </video>
@@ -159,7 +194,7 @@
   <!-- البطاقة -->
   <div class="card-container" id="mainCard">
     
-    <!-- === الوجه الأمامي (1) === -->
+    <!-- === الوجه الأمامي === -->
     <div class="face front">
       <div class="logo"></div>
       <h1>I NZR | كنج</h1>
@@ -174,9 +209,9 @@
       <a href="https://t.me/O_I_I3" class="btn" target="_blank" onclick="playSound()">
         <i class="fa-brands fa-telegram"></i> تواصل تليجرام
       </a>
-    </div> <!-- تم إغلاق الوجه الأول هنا بشكل صحيح -->
+    </div>
 
-    <!-- === الوجه الخلفي (2) === -->
+    <!-- === الوجه الخلفي === -->
     <div class="face back">
       <div class="logo" style="width: 70px; height: 70px; margin-bottom: 15px;"></div>
       <h2 style="margin-bottom: 20px;">الروابط الرسمية</h2>
@@ -198,66 +233,59 @@
       <button class="btn" style="background: transparent; border: none; margin-top: 10px;" onclick="flipCard()">
         <i class="fa-solid fa-rotate-left"></i> رجوع
       </button>
-    </div> <!-- تم إغلاق الوجه الثاني هنا -->
+    </div>
 
   </div>
 
-<script>
-    // === 1. تعريف المتغيرات والعناصر ===
+  <script>
+    // === تعريف العناصر ===
     const card = document.getElementById('mainCard');
     const music = document.getElementById('bgMusic');
     const clickFx = document.getElementById('clickSound');
+    const loaderScreen = document.getElementById('loader-screen');
+    const countText = document.getElementById('count-text');
+    
     let musicStarted = false;
 
-    // === 2. إعدادات شاشة المقدمة (الكتابة) ===
-    const textToType = `مرحبًا بكم في موقعنا الرسمي.
-نرجو منكم الانتظار قليلًا حتى يكتمل التحميل،
-حيث ستظهر لكم الصفحة الرسمية للمتجر.
-شكرًا لزيارتكم، ونتمنى لكم تجربة مميزة.`;
-
-    const typeArea = document.getElementById('typing-area');
-    const introScreen = document.getElementById('intro-screen');
-    let i = 0;
-    const speed = 40; // سرعة الكتابة
-
-    // === 3. دالة تشغيل الصوت ===
+    // === دالة تشغيل الصوت والموسيقى ===
     function playSound() {
-      // تشغيل تكة الزر
+      // 1. صوت التكة
       if(clickFx) {
         clickFx.currentTime = 0;
         clickFx.play();
       }
-      // تشغيل الموسيقى الخلفية
+      // 2. الموسيقى
       if (!musicStarted) {
         music.play().then(() => { musicStarted = true; }).catch((e) => {});
       }
     }
 
-    // === 4. دالة الكتابة التلقائية ===
-    function typeWriter() {
-      // تأكد أن العنصر موجود لتجنب الأخطاء
-      if (!typeArea) return;
-
-      if (i < textToType.length) {
-        // إضافة الحرف التالي
-        typeArea.innerHTML += textToType.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-      } else {
-        // عند الانتهاء انتظر ثانية ونصف ثم اخفِ الشاشة
-        setTimeout(() => {
-          if(introScreen) introScreen.classList.add('fade-out');
-          playSound(); // تشغيل الموسيقى تلقائياً عند ظهور الموقع
-        }, 1500);
-      }
+    // === دالة العداد عند التحميل ===
+    function startLoader() {
+      let count = 0;
+      // سرعة العداد: كل 25 جزء من الثانية يزيد الرقم
+      const interval = setInterval(() => {
+        count++;
+        if(countText) countText.innerText = count + '%';
+        
+        if (count >= 100) {
+          clearInterval(interval);
+          // بعد الانتهاء، اخفاء الشاشة
+          setTimeout(() => {
+            if(loaderScreen) loaderScreen.classList.add('fade-out');
+            playSound(); // محاولة تشغيل الصوت تلقائياً
+          }, 400); 
+        }
+      }, 25); 
     }
 
-    // === 5. دوال البطاقة والموقع ===
+    // === دالة تدوير البطاقة ===
     function flipCard() {
       playSound(); 
       card.classList.toggle('flipped'); 
     }
 
+    // === دالة زر الموسيقى ===
     function toggleMusic() {
       if (music.paused) {
         music.play();
@@ -267,8 +295,8 @@
       }
     }
 
-    // === 6. بدء التشغيل عند التحميل ===
-    window.addEventListener('load', typeWriter);
+    // بدء العداد فوراً عند التحميل
+    window.addEventListener('load', startLoader);
   </script>
 
 </body>
