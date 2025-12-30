@@ -38,12 +38,23 @@
     }
 
     /* === ستايل الاسم في الأعلى يميناً === */
+    /* جعلناه متحركاً قليلاً (Glitch) لإضافة الحيوية */
+    @keyframes glitch-skew {
+      0% { transform: skew(0deg); }
+      20% { transform: skew(-2deg); }
+      40% { transform: skew(2deg); }
+      60% { transform: skew(-1deg); }
+      80% { transform: skew(1deg); }
+      100% { transform: skew(0deg); }
+    }
     .top-header {
       position: fixed; top: 25px; right: 25px;
       font-size: 16px; font-weight: 900; color: var(--gold);
       letter-spacing: 2px; z-index: 2000;
       text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
       pointer-events: none;
+      animation: glitch-skew 5s infinite;
+      border-bottom: 2px solid var(--gold); padding-bottom: 5px;
     }
 
     /* === ستايل شاشة المقدمة === */
@@ -74,6 +85,19 @@
       background: rgba(0, 0, 0, 0.3); z-index: -9;
     }
 
+    /* === تأثير الموجة عند اللمس (Magic Ripple) === */
+    .magic-ripple {
+      position: absolute; width: 20px; height: 20px;
+      background: rgba(255, 215, 0, 0.6); border-radius: 50%;
+      transform: translate(-50%, -50%); pointer-events: none;
+      animation: ripple-anim 0.6s linear forwards; z-index: 9999;
+      box-shadow: 0 0 10px var(--gold);
+    }
+    @keyframes ripple-anim {
+      0% { width: 0; height: 0; opacity: 1; }
+      100% { width: 150px; height: 150px; opacity: 0; }
+    }
+
     /* === البطاقة والحركة === */
     .card-container {
       width: 90%; max-width: 400px; height: 600px;
@@ -101,12 +125,19 @@
     .card-container.flipped .face.front { pointer-events: none; z-index: 1; }
     .card-container.flipped .face.back { pointer-events: auto; z-index: 2; }
 
+    /* === اللوجو (مع تأثير النبض) === */
+    @keyframes pulse-gold {
+      0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); transform: scale(1); }
+      50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.8), 0 0 20px var(--gold); transform: scale(1.02); }
+      100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); transform: scale(1); }
+    }
     .logo {
       width: 120px; height: 120px; border-radius: 50%;
       background: url('logo.png') center/cover;
       border: 3px solid var(--gold);
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
       margin-bottom: 20px;
+      animation: pulse-gold 3s infinite ease-in-out;
     }
 
     h1 { font-size: 24px; color: #fff; margin-bottom: 5px; text-shadow: 0 2px 5px #000; }
@@ -135,7 +166,8 @@
     .btn:active { transform: scale(0.95); }
     .btn i { font-size: 18px; position: relative; z-index: 2; }
 
-    /* === الأزرار الجانبية === */
+    /* === الأزرار الجانبية (تعديل الأماكن) === */
+    /* زر الموسيقى يسار */
     .music-btn {
       position: fixed; bottom: 20px; left: 20px;
       width: 45px; height: 45px; border-radius: 50%;
@@ -143,8 +175,9 @@
       display: flex; align-items: center; justify-content: center;
       z-index: 100; cursor: pointer; box-shadow: 0 0 10px var(--gold);
     }
+    /* زر الإبلاغ يمين (التعديل المطلوب) */
     .report-btn {
-      position: fixed; bottom: 20px; left: 80px;
+      position: fixed; bottom: 20px; right: 20px; /* تم النقل لليمين */
       width: 45px; height: 45px; border-radius: 50%;
       background: transparent; border: 2px solid var(--gold); color: var(--gold); font-size: 20px;
       display: flex; align-items: center; justify-content: center;
@@ -201,7 +234,9 @@
   <audio id="clickSound"> <source src="click.mp3" type="audio/mpeg"> </audio>
 
   <!-- أزرار التحكم السفلية -->
+  <!-- زر الموسيقى (يسار) -->
   <button class="music-btn" onclick="toggleMusic()"><i class="fa-solid fa-music"></i></button>
+  <!-- زر الإبلاغ (يمين) -->
   <button class="report-btn" onclick="toggleReportModal()"><i class="fa-solid fa-triangle-exclamation"></i></button>
 
   <!-- البطاقة -->
@@ -211,7 +246,7 @@
     <div class="face front">
       <div class="logo"></div>
       <h1>I NZR | كنج</h1>
-      <h2>KING</h2>
+      <h2>أهلاً وسهلاً بكم في موقعنا الخاص، نقدم لكم أفضل الخدمات</h2>
       
       <!-- زر التدوير -->
       <button class="btn" type="button" onclick="flipCard()">
@@ -220,12 +255,12 @@
       
       <!-- زر المالك 1 -->
       <a href="https://t.me/O_I_I3" class="btn" target="_blank" onclick="playSound()">
-        <i class="fa-brands fa-telegram"></i> تواصل (المالك 1)
+        <i class="fa-brands fa-telegram"></i> تواصل (𝗪𝗶𝘁𝗵 𝗞𝗜𝗡𝗚)
       </a>
 
       <!-- زر المالك 2 (ضع الرابط هنا) -->
       <a href="https://t.me/O_I_I4" class="btn" target="_blank" onclick="playSound()">
-        <i class="fa-brands fa-telegram"></i> تواصل (المالك 2)
+        <i class="fa-brands fa-telegram"></i> تواصل (𝗪𝗶𝘁𝗵 𝗦𝗞𝗔𝗥)
       </a>
     </div>
 
@@ -320,6 +355,19 @@
         }
         requestAnimationFrame(animateParticles);
     }
+
+    // === تأثير اللمسة السحرية ===
+    document.addEventListener('click', function(e) {
+      // نتأكد أن الضغطة ليست على زر أو بطاقة عشان ما نغطي عليهم
+      if(e.target.closest('.btn') || e.target.closest('.music-btn') || e.target.closest('.report-btn')) return;
+      
+      let ripple = document.createElement('div');
+      ripple.classList.add('magic-ripple');
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
+      document.body.appendChild(ripple);
+      setTimeout(() => { ripple.remove(); }, 600);
+    });
 
     // === الوظائف العامة ===
     function playSound() {
