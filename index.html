@@ -226,24 +226,29 @@
   </div>
 
   <!-- البطاقة الرئيسية -->
+  <!-- بداية منطقة البطاقة -->
   <div class="card-container" id="mainCard">
     
-    <!-- الوجه الأمامي -->
+    <!-- 1️⃣ الوجه الأمامي (الواجهة) -->
     <div class="face front">
       <div class="logo"></div>
       <h1>I NZR | كنج</h1>
       <h2>Store KING</h2>
       
+      <!-- زر التدوير -->
       <button class="btn" onclick="flipCard()">
         <i class="fa-solid fa-wand-magic-sparkles"></i> تصفح معلوماتنا
       </button>
       
+      <!-- زر التليجرام -->
       <a href="https://t.me/O_I_I3" class="btn" target="_blank" onclick="playSound()">
         <i class="fa-brands fa-telegram"></i> تواصل تليجرام
       </a>
-    </div>
+    </div> 
+    <!-- 🛑 توقف! هذا القوس </div> هو سبب المشكلة، تأكد أنه موجود هنا ليفصل الصفحتين -->
 
-    <!-- الوجه الخلفي (القنوات) -->
+
+    <!-- 2️⃣ الوجه الخلفي (الروابط) -->
     <div class="face back">
       <div class="logo" style="width: 70px; height: 70px; margin-bottom: 15px;"></div>
       <h2 style="margin-bottom: 20px;">الروابط الرسمية</h2>
@@ -264,7 +269,8 @@
     </div>
 
   </div>
-
+  <!-- نهاية منطقة البطاقة -->
+  
   <script>
     // المتغيرات
     const loader = document.getElementById('loading-screen');
