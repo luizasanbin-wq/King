@@ -212,43 +212,45 @@
   <!-- البطاقة -->
   <div class="card-container" id="mainCard">
     
-    <!-- === الوجه الأمامي === -->
+    <!-- === الوجه الأمامي (1) === -->
     <div class="face front">
       <div class="logo"></div>
       <h1>I NZR | كنج</h1>
-      <h2>KING</h2>
+      <h2>أهلًا بكم في موقعنا الخاص، حيث نقدم خدمات التواصل الاجتماعي.</h2>
       
-      <!-- زر التدوير -->
+      <!-- زر 1: يقلب البطاقة ليظهر الروابط -->
       <button class="btn" onclick="flipCard()">
         <i class="fa-solid fa-wand-magic-sparkles"></i> تصفح معلوماتنا
       </button>
       
-      <!-- زر التليجرام الخاص -->
+      <!-- زر 2: يفتح حساب المالك مباشرة -->
       <a href="https://t.me/O_I_I3" class="btn" target="_blank" onclick="playSound()">
-        <i class="fa-brands fa-telegram"></i> تواصل تليجرام
+        <i class="fa-brands fa-telegram"></i> تواصل (تيلجرام)
       </a>
     </div>
 
-    <!-- === الوجه الخلفي === -->
+    <!-- === الوجه الخلفي (2) === -->
     <div class="face back">
-      <div class="logo" style="width: 70px; height: 70px; margin-bottom: 15px;"></div>
-      <h2 style="margin-bottom: 20px;">الروابط الرسمية</h2>
+      <div class="logo" style="width: 70px; height: 70px; margin-bottom: 10px;"></div>
+      <h2 style="margin-bottom: 15px;">الروابط الرسمية</h2>
       
-      <!-- القناة -->
+      <!-- رابط القناة -->
       <a href="https://t.me/T_V9RN" class="btn" target="_blank" onclick="playSound()">
-        <i class="fa-brands fa-telegram"></i> القناة الرسمية
+        <i class="fa-solid fa-bullhorn"></i> القناة الرسمية
       </a>
-      <!-- القروب -->
+
+      <!-- رابط القروب -->
       <a href="https://t.me/ZEX9X" class="btn" target="_blank" onclick="playSound()">
         <i class="fa-solid fa-users"></i> قروب المناقشة
       </a>
-      <!-- البوت -->
+
+      <!-- رابط البوت -->
       <a href="https://t.me/NFJEKJEJEJBOT" class="btn" target="_blank" onclick="playSound()">
         <i class="fa-solid fa-robot"></i> بوت الاشتراك
       </a>
 
-      <!-- زر الرجوع -->
-      <button class="btn" style="background: transparent; border: none; margin-top: 10px;" onclick="flipCard()">
+      <!-- زر الرجوع: وظيفته فقط قلب البطاقة (بدون رابط) -->
+      <button class="btn" style="background: transparent; border: none; margin-top: 5px;" onclick="flipCard()">
         <i class="fa-solid fa-rotate-left"></i> رجوع
       </button>
     </div>
