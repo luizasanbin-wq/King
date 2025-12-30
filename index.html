@@ -33,56 +33,38 @@
     .top-header {
       position: fixed;
       top: 25px;
-      right: 25px; /* يمين الشاشة */
+      right: 25px;
       font-size: 16px;
       font-weight: 900;
       color: var(--gold);
       letter-spacing: 2px;
-      z-index: 2000; /* طبقة عالية جداً */
+      z-index: 2000;
       text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-      pointer-events: none; /* للسماح بالنقر تحته */
+      pointer-events: none;
     }
 
-    /* === ستايل شاشة التحميل (العداد) === */
-    #loader-screen {
+    /* === ستايل شاشة المقدمة (شفاف وفخم) === */
+    #intro-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85); /* خلفية داكنة */
+      /* لون أسود شفاف بنسبة 80% لرؤية الفيديو خلفه */
+      background: rgba(0, 0, 0, 0.8); 
+      /* تأثير تغبيش خفيف (Blur) يعطي فخامة للزجاج */
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px); /* لدعم الآيفون */
       z-index: 9999;
       display: flex; justify-content: center; align-items: center;
-      transition: opacity 0.8s ease; /* اختفاء ناعم */
-      backdrop-filter: blur(8px); /* تأثير ضبابي قوي */
+      text-align: center; padding: 20px;
+      transition: opacity 1s ease-in-out;
     }
-
-    .loader-circle {
-      position: relative;
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
-    }
-
-    .loader-ring {
-      position: absolute;
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: var(--gold);
-      border-right-color: var(--gold);
-      animation: spin 1s linear infinite;
-      box-shadow: 0 0 15px var(--gold);
-    }
-
-    .loader-count {
-      color: #fff;
-      font-size: 24px;
-      font-weight: 900;
-      text-shadow: 0 0 10px var(--gold);
-      font-family: sans-serif; /* للأرقام الإنجليزية */
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .intro-text {
+      color: var(--gold);
+      font-size: 18px;
+      line-height: 1.8;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      border-left: 2px solid var(--gold); /* مؤشر الكتابة */
+      padding-left: 10px;
+      white-space: pre-wrap;
     }
 
     .fade-out {
@@ -90,7 +72,7 @@
       pointer-events: none;
     }
 
-    /* === ستايلات الموقع الأصلية === */
+    /* === ستايلات الخلفية والبطاقة === */
     #video-bg {
       position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
@@ -140,17 +122,55 @@
     h1 { font-size: 24px; color: #fff; margin-bottom: 5px; text-shadow: 0 2px 5px #000; }
     h2 { font-size: 14px; color: var(--gold); margin-bottom: 30px; letter-spacing: 1px; }
 
-    .btn {
-      width: 100%; padding: 15px; margin: 8px 0; border-radius: 50px;
-      background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 215, 0, 0.3);
-      color: #fff; font-size: 16px; text-decoration: none; font-weight: bold;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      cursor: pointer; transition: 0.2s;
+    /* === ستايل الأزرار الجديد (قوس قزح الدوار) === */
+    @keyframes rotate-rainbow {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
-    
-    .btn:active { transform: scale(0.95); background: var(--gold); color: #000; }
-    .btn i { font-size: 18px; }
 
+    .btn {
+      position: relative;
+      width: 100%; padding: 15px; margin: 10px 0;
+      border-radius: 50px;
+      color: #fff; font-size: 16px; font-weight: bold; text-decoration: none;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      cursor: pointer; 
+      border: none;
+      background: transparent;
+      overflow: hidden;
+      z-index: 1;
+      transition: transform 0.2s;
+    }
+
+    /* طبقة الألوان الدوارة */
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 300%; height: 300%;
+      background: conic-gradient(
+        #ff0000, #ff7300, #fffb00, #48ff00, 
+        #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000
+      );
+      transform: translate(-50%, -50%);
+      animation: rotate-rainbow 3s linear infinite;
+      z-index: -2;
+    }
+
+    /* الطبقة السوداء الداخلية */
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 2px; /* سمك الإطار الملون */
+      background: #000;
+      border-radius: 48px;
+      z-index: -1;
+    }
+
+    .btn:active { transform: scale(0.95); }
+    .btn i { font-size: 18px; position: relative; z-index: 2; }
+
+    /* === زر الموسيقى === */
     .music-btn {
       position: fixed; bottom: 20px; left: 20px;
       width: 45px; height: 45px; border-radius: 50%;
@@ -159,6 +179,7 @@
       z-index: 100; cursor: pointer;
       box-shadow: 0 0 10px var(--gold);
     }
+</style>
 
   </style>
 </head>
@@ -167,12 +188,9 @@
   <!-- الهيدر العلوي الثابت -->
   <div class="top-header">S T O R E • K I N G</div>
 
-  <!-- شاشة التحميل (عداد دائري) -->
-  <div id="loader-screen">
-    <div class="loader-circle">
-      <div class="loader-count" id="count-text">0%</div>
-      <div class="loader-ring"></div>
-    </div>
+  <!-- شاشة التحميل (الكتابة التلقائية) -->
+  <div id="intro-screen">
+      <div class="intro-text" id="typing-area"></div>
   </div>
 
   <!-- الفيديو الخلفية -->
@@ -238,54 +256,64 @@
   </div>
 
   <script>
-    // === تعريف العناصر ===
+    // === 1. تعريف العناصر الأساسية ===
     const card = document.getElementById('mainCard');
     const music = document.getElementById('bgMusic');
     const clickFx = document.getElementById('clickSound');
-    const loaderScreen = document.getElementById('loader-screen');
-    const countText = document.getElementById('count-text');
+    
+    // عناصر شاشة المقدمة (الكتابة)
+    const typeArea = document.getElementById('typing-area');
+    const introScreen = document.getElementById('intro-screen');
     
     let musicStarted = false;
 
-    // === دالة تشغيل الصوت والموسيقى ===
+    // === 2. نص الكتابة التلقائية ===
+    const textToType = `مرحبًا بكم في موقعنا الرسمي.
+نرجو منكم الانتظار قليلًا حتى يكتمل التحميل،
+حيث ستظهر لكم الصفحة الرسمية للمتجر.
+شكرًا لزيارتكم، ونتمنى لكم تجربة مميزة.`;
+
+    let i = 0;
+    const speed = 40; // سرعة الكتابة (كلما قل الرقم زادت السرعة)
+
+    // === 3. دالة الصوت (تكة + موسيقى) ===
     function playSound() {
-      // 1. صوت التكة
+      // تشغيل صوت التكة عند الضغط
       if(clickFx) {
         clickFx.currentTime = 0;
         clickFx.play();
       }
-      // 2. الموسيقى
+      // محاولة تشغيل الموسيقى الخلفية إذا لم تعمل بعد
       if (!musicStarted) {
         music.play().then(() => { musicStarted = true; }).catch((e) => {});
       }
     }
 
-    // === دالة العداد عند التحميل ===
-    function startLoader() {
-      let count = 0;
-      // سرعة العداد: كل 25 جزء من الثانية يزيد الرقم
-      const interval = setInterval(() => {
-        count++;
-        if(countText) countText.innerText = count + '%';
-        
-        if (count >= 100) {
-          clearInterval(interval);
-          // بعد الانتهاء، اخفاء الشاشة
-          setTimeout(() => {
-            if(loaderScreen) loaderScreen.classList.add('fade-out');
-            playSound(); // محاولة تشغيل الصوت تلقائياً
-          }, 400); 
-        }
-      }, 25); 
+    // === 4. دالة الكتابة التلقائية (بديلة للعداد) ===
+    function typeWriter() {
+      // حماية: إذا لم يجد عنصر الكتابة لا يفعل شيئاً (يمنع الأخطاء)
+      if (!typeArea) return; 
+
+      if (i < textToType.length) {
+        typeArea.innerHTML += textToType.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        // انتهت الكتابة: انتظر 1.5 ثانية ثم اخفِ الشاشة
+        setTimeout(() => {
+          if(introScreen) introScreen.classList.add('fade-out');
+          playSound(); // تشغيل الصوت عند ظهور الموقع
+        }, 1500);
+      }
     }
 
-    // === دالة تدوير البطاقة ===
+    // === 5. دوال البطاقة والموقع ===
     function flipCard() {
       playSound(); 
       card.classList.toggle('flipped'); 
     }
 
-    // === دالة زر الموسيقى ===
+    // زر تشغيل/إيقاف الموسيقى
     function toggleMusic() {
       if (music.paused) {
         music.play();
@@ -295,8 +323,8 @@
       }
     }
 
-    // بدء العداد فوراً عند التحميل
-    window.addEventListener('load', startLoader);
+    // === 6. بدء التشغيل عند اكتمال تحميل الصفحة ===
+    window.addEventListener('load', typeWriter);
   </script>
 
 </body>
